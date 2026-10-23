@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="site.css">
+<script src="theme.js"></script>
 <style>
   /* ---------- hero ---------- */
 
@@ -274,12 +275,15 @@
 
   <header class="masthead">
     <a class="wordmark" href="./"><i aria-hidden="true"><b></b><b></b><b></b><b></b></i>Spectriq</a>
-    <nav>
-      <a href="#areas">The test</a>
-      <a href="#result">Your result</a>
-      <a href="#science">Science</a>
-      <a href="#privacy">Privacy</a>
-    </nav>
+    <div class="tools">
+      <nav>
+        <a href="#areas">The test</a>
+        <a href="#result">Your result</a>
+        <a href="#science">Science</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg></button>
+    </div>
   </header>
 
   <div class="hero">
