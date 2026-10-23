@@ -1,0 +1,262 @@
+/* Spectriq — shared styles for the home page and the legal pages.
+   Four hues, one per ability area; everything else stays neutral. */
+:root {
+  --paper: #F4F3F7;
+  --card: #FFFFFF;
+  --edge: #DEDBE6;
+  --ink: #17151F;
+  --ink-soft: #57546A;
+  --ink-faint: #8A8799;
+  --logic: #6A4CE0;
+  --space: #1585C9;
+  --memory: #13977F;
+  --speed: #E0592E;
+  --accent: var(--logic);
+  --shadow: rgba(23, 21, 31, 0.08);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #111018;
+    --card: #1B1A24;
+    --edge: #2F2D3B;
+    --ink: #F1F0F6;
+    --ink-soft: #ABA8BC;
+    --ink-faint: #77748A;
+    --logic: #9B85FF;
+    --space: #4DB3F0;
+    --memory: #3CCBAE;
+    --speed: #FF8A5E;
+    --shadow: rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #111018;
+  --card: #1B1A24;
+  --edge: #2F2D3B;
+  --ink: #F1F0F6;
+  --ink-soft: #ABA8BC;
+  --ink-faint: #77748A;
+  --logic: #9B85FF;
+  --space: #4DB3F0;
+  --memory: #3CCBAE;
+  --speed: #FF8A5E;
+  --shadow: rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Bricolage Grotesque', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.mono {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  letter-spacing: 0.02em;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; }
+.wrap.narrow { max-width: 760px; }
+
+/* the spectrum band: the brand mark, used thin */
+.band {
+  height: 4px;
+  background: linear-gradient(90deg, var(--logic) 0 25%, var(--space) 25% 50%, var(--memory) 50% 75%, var(--speed) 75%);
+}
+
+/* ---------- masthead ---------- */
+
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+  padding-block: 22px;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 21px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.wordmark i {
+  display: inline-grid;
+  grid-template-columns: repeat(4, 5px);
+  align-items: end;
+  gap: 2px;
+  height: 18px;
+}
+
+.wordmark i b { display: block; border-radius: 1px; }
+.wordmark i b:nth-child(1) { height: 60%; background: var(--logic); }
+.wordmark i b:nth-child(2) { height: 100%; background: var(--space); }
+.wordmark i b:nth-child(3) { height: 75%; background: var(--memory); }
+.wordmark i b:nth-child(4) { height: 45%; background: var(--speed); }
+
+.masthead nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.masthead nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.masthead nav a:hover, .masthead nav a:focus-visible { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ---------- type ---------- */
+
+.eyebrow {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 16px;
+}
+
+h1 {
+  font-size: clamp(40px, 6.6vw, 70px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  margin: 0 0 22px;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: clamp(26px, 3.6vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 0 0 14px;
+  text-wrap: balance;
+}
+
+h3 { font-size: 19px; letter-spacing: -0.02em; margin: 0 0 6px; }
+
+.lead {
+  font-size: clamp(18px, 2.1vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 48ch;
+  margin: 0 0 26px;
+}
+
+/* ---------- footer ---------- */
+
+footer {
+  border-top: 1px solid var(--edge);
+  margin-top: 56px;
+}
+
+footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px 18px;
+  flex-wrap: wrap;
+  padding-block: 26px 40px;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+footer nav { display: flex; gap: 8px 18px; flex-wrap: wrap; }
+
+footer a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid var(--edge);
+}
+
+footer a:hover, footer a:focus-visible { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ---------- legal pages ---------- */
+
+.doc-head { padding-block: 20px 34px; border-bottom: 1px solid var(--edge); }
+.doc-head h1 { font-size: clamp(34px, 5.5vw, 52px); margin-bottom: 10px; }
+.updated { margin: 0; color: var(--ink-faint); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12.5px; }
+
+.doc { padding-top: 32px; }
+.doc h2 { font-size: clamp(21px, 2.6vw, 25px); margin: 38px 0 10px; }
+.doc p, .doc li { color: var(--ink-soft); }
+.doc strong { color: var(--ink); }
+.doc ul { padding-left: 20px; }
+.doc li { margin-bottom: 6px; }
+
+.doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 15px;
+}
+
+.doc th, .doc td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--edge);
+}
+
+.doc th {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 500;
+}
+
+.doc td { color: var(--ink-soft); }
+.doc td:first-child { color: var(--ink); }
+
+@media (max-width: 560px) {
+  .doc table, .doc tbody, .doc tr, .doc td { display: block; width: 100%; }
+  .doc thead { display: none; }
+  .doc tr { border-bottom: 1px solid var(--edge); padding-block: 8px; }
+  .doc td { border: 0; padding: 3px 0; }
+}
+
+.box {
+  background: var(--card);
+  border: 1px solid var(--edge);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+}
+
+.box h3 { margin-bottom: 10px; }
+.box ul { margin: 0; padding-left: 20px; }
+.box li { margin-bottom: 5px; color: var(--ink-soft); }
+.box p { margin: 0 0 10px; color: var(--ink-soft); }
+.box p:last-child { margin-bottom: 0; }
+.box.warn { border-left-color: var(--speed); }
+
+@media (max-width: 520px) { .box { padding: 18px 18px; } }

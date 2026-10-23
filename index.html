@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spectriq — IQ &amp; Brain Test</title>
+<meta name="description" content="Spectriq is a puzzle test without words for iPhone and Android: logic, spatial thinking, memory and speed, shown as a profile rather than one number. For entertainment; norms built from open scientific sources.">
+<link rel="canonical" href="https://spectriq.nghive.app/">
+<meta property="og:url" content="https://spectriq.nghive.app/">
+<meta property="og:title" content="Spectriq — IQ &amp; Brain Test">
+<meta property="og:description" content="A puzzle test without words: logic, space, memory and speed, shown as a profile rather than one number.">
+<meta property="og:image" content="https://nghive.app/assets/header.jpg">
+<meta property="og:site_name" content="NG Hive">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Spectriq", "operatingSystem": "iOS, Android", "applicationCategory": "EntertainmentApplication", "url": "https://spectriq.nghive.app/", "image": "https://nghive.app/assets/header.jpg", "description": "A puzzle test without words that shows a profile of four ability areas. For entertainment.", "publisher": {"@type": "Organization", "name": "NG Hive", "url": "https://nghive.app/"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+  /* ---------- hero ---------- */
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 52px;
+    align-items: center;
+    padding-block: 52px 64px;
+  }
+
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-block: 32px 48px; }
+  }
+
+  h1 .spec-word {
+    background: linear-gradient(90deg, var(--logic), var(--space), var(--memory), var(--speed));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px 10px; }
+
+  .chips span {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    border: 1px solid var(--edge);
+    border-radius: 999px;
+    padding: 5px 11px;
+    color: var(--ink-soft);
+    background: var(--card);
+  }
+
+  .fun-note {
+    margin: 22px 0 0;
+    font-size: 13.5px;
+    color: var(--ink-faint);
+    max-width: 52ch;
+  }
+
+  .fun-note b { color: var(--ink-soft); font-weight: 600; }
+
+  /* example result card */
+  .result {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 24px 24px 20px;
+    box-shadow: 0 18px 48px var(--shadow);
+  }
+
+  .result-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .pct {
+    font-size: clamp(22px, 3vw, 27px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 0 0 22px;
+  }
+
+  .pct em { font-style: normal; color: var(--logic); }
+
+  .bars { display: grid; gap: 14px; margin: 0 0 20px; padding: 0; list-style: none; }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 74px minmax(0, 1fr) 42px;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .bar-row b { font-weight: 600; }
+
+  .bar-row .track {
+    height: 10px;
+    border-radius: 99px;
+    background: var(--edge);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-row .track i {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: inherit;
+    background: var(--c);
+  }
+
+  .bar-row .num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  .result-small {
+    border-top: 1px solid var(--edge);
+    padding-top: 14px;
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- sections ---------- */
+
+  section { padding-block: 60px; border-top: 1px solid var(--edge); }
+
+  .sec-head { max-width: 62ch; margin-bottom: 34px; }
+  .sec-head p { color: var(--ink-soft); margin: 0; }
+
+  /* areas */
+  .areas {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  @media (max-width: 960px) { .areas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .areas { grid-template-columns: 1fr; } }
+
+  .area {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-top: 4px solid var(--c);
+    border-radius: 8px;
+    padding: 20px 20px 18px;
+  }
+
+  .area .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c);
+    margin: 0 0 8px;
+  }
+
+  .area h3 { font-size: 21px; margin-bottom: 14px; }
+  .area dl { margin: 0; }
+  .area dt { font-weight: 600; font-size: 15px; }
+  .area dd { margin: 2px 0 12px; font-size: 14.5px; color: var(--ink-soft); }
+  .area dd:last-child { margin-bottom: 0; }
+
+  .modes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 28px;
+    margin-top: 34px;
+  }
+
+  @media (max-width: 760px) { .modes { grid-template-columns: 1fr; } }
+
+  .mode { border-top: 1px solid var(--edge); padding-block: 16px; }
+  .mode .mono { font-size: 12px; color: var(--ink-faint); }
+  .mode p { margin: 4px 0 0; color: var(--ink-soft); font-size: 15px; }
+
+  /* result explanation */
+  .two {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 44px;
+  }
+
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+
+  .two p { color: var(--ink-soft); margin: 0 0 12px; }
+  .two p:last-child { margin-bottom: 0; }
+
+  /* sources */
+  .sources {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  @media (max-width: 860px) { .sources { grid-template-columns: 1fr; } }
+
+  .source {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .source .mono { font-size: 11.5px; color: var(--memory); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 8px; }
+  .source p:last-child { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+  .science-after { margin-top: 26px; max-width: 70ch; color: var(--ink-soft); }
+
+  /* disclaimer + privacy */
+  .box h2 { font-size: clamp(22px, 3vw, 28px); }
+
+  .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+
+  .facts li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    color: var(--ink-soft);
+  }
+
+  .facts li::before {
+    content: "";
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--memory);
+    transform: translateY(-1px);
+  }
+
+  /* store buttons — placeholders until the app is published */
+  .stores { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero .stores { margin-top: 26px; }
+
+  .store-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 196px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: var(--card);
+    border: 1.5px dashed var(--edge);
+    color: var(--ink-soft);
+    text-align: left;
+    cursor: default;
+  }
+
+  .store-btn svg { flex: none; opacity: 0.6; }
+  .store-btn .kv { display: flex; flex-direction: column; line-height: 1.25; }
+  .store-btn .small { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.03em; }
+  .store-btn .big { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="band"></div>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <a class="wordmark" href="./"><i aria-hidden="true"><b></b><b></b><b></b><b></b></i>Spectriq</a>
+    <nav>
+      <a href="#areas">The test</a>
+      <a href="#result">Your result</a>
+      <a href="#science">Science</a>
+      <a href="#privacy">Privacy</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <p class="eyebrow">In development · iPhone · Android</p>
+      <h1>Not one number. <span class="spec-word">A spectrum.</span></h1>
+      <p class="lead">
+        Spectriq is a set of puzzles without words — patterns, 3D blocks, sequences to remember,
+        symbols to spot against the clock. At the end you see how you did in four areas, compared
+        with people your age, instead of a single score.
+      </p>
+      <div class="chips">
+        <span>4 areas</span>
+        <span>8 puzzle types</span>
+        <span>~10 or ~30 minutes</span>
+        <span>works offline</span>
+        <span>free</span>
+      </div>
+      <div class="stores">
+        <span class="store-btn" aria-label="App Store — coming soon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.463 2.096-1.184 2.883-.796.83-2.083 1.474-3.13 1.474-.11-1.11.464-2.223 1.183-2.94.796-.83 2.148-1.443 3.131-1.417zM20.62 17.104c-.472 1.09-.694 1.577-1.297 2.548-.842 1.35-2.03 3.036-3.501 3.05-1.303.014-1.64-.85-3.41-.84-1.77.01-2.14.855-3.443.841-1.472-.014-2.596-1.53-3.438-2.878-2.36-3.78-2.607-8.22-1.15-10.582.958-1.535 2.518-2.432 3.987-2.432 1.494 0 2.435.85 3.673.85 1.203 0 1.933-.85 3.674-.85 1.32 0 2.717.72 3.717 1.964-3.27 1.79-2.74 6.463.188 8.329z"/></svg>
+          <span class="kv"><span class="small">Coming soon to the</span><span class="big">App Store</span></span>
+        </span>
+        <span class="store-btn" aria-label="Google Play — coming soon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.6c-.4.4-.6.9-.6 1.5v15.8c0 .6.2 1.1.6 1.5l.2.1L13 12.4v-.2L3.8 2.5l-.2.1zM16 15.3l-3-3v-.2l3-3 3.5 2c1 .6 1 1.6 0 2.2l-3.5 2zM4.4 21.5 13.7 13l2.3 2.3-10.8 6c-.3.2-.7.3-1 .2l.2 0zM13.7 11l-9.3-9.4c.3-.1.6 0 .9.2L16 8l-2.3 3z"/></svg>
+          <span class="kv"><span class="small">Coming soon to</span><span class="big">Google Play</span></span>
+        </span>
+      </div>
+      <p class="fun-note"><b>For entertainment.</b> Spectriq is a game of puzzles, not a medical,
+        psychological or clinical assessment. <a href="#fun">What that means</a></p>
+    </div>
+
+    <div class="result" aria-label="Example of a result screen">
+      <div class="result-top"><span>Example result</span><span>age 30–34</span></div>
+      <p class="pct">Better than <em>78%</em> of people your age</p>
+      <ul class="bars">
+        <li class="bar-row" style="--c: var(--logic)"><b>Logic</b><span class="track"><i style="width: 84%"></i></span><span class="num">84th</span></li>
+        <li class="bar-row" style="--c: var(--space)"><b>Space</b><span class="track"><i style="width: 91%"></i></span><span class="num">91st</span></li>
+        <li class="bar-row" style="--c: var(--memory)"><b>Memory</b><span class="track"><i style="width: 62%"></i></span><span class="num">62nd</span></li>
+        <li class="bar-row" style="--c: var(--speed)"><b>Speed</b><span class="track"><i style="width: 70%"></i></span><span class="num">70th</span></li>
+      </ul>
+      <p class="result-small">Strongest: turning shapes in your head. Roughly IQ 108–118 — a playful
+        estimate, not a clinical assessment.</p>
+    </div>
+  </div>
+
+  <section id="areas">
+    <div class="sec-head">
+      <h2>Four areas, two puzzles each</h2>
+      <p>No words, no trivia, nothing to translate — so the test works the same in any language and
+        any country. Every puzzle is generated by the app from rules, which also means you can't learn
+        the answers by heart.</p>
+    </div>
+    <div class="areas">
+      <article class="area" style="--c: var(--logic)">
+        <p class="tag">01</p>
+        <h3>Logic</h3>
+        <dl>
+          <dt>Patterns</dt>
+          <dd>A 3×3 grid with one piece missing. Find the rule, pick the piece.</dd>
+          <dt>Scales</dt>
+          <dd>Shapes in balance. Work out what goes on the empty pan.</dd>
+        </dl>
+      </article>
+      <article class="area" style="--c: var(--space)">
+        <p class="tag">02</p>
+        <h3>Space</h3>
+        <dl>
+          <dt>3D blocks</dt>
+          <dd>Turn the blocks with a swipe and rebuild the pattern. Faster earns more.</dd>
+          <dt>Rotation</dt>
+          <dd>Two 3D figures: the same one turned around, or a mirror image?</dd>
+        </dl>
+      </article>
+      <article class="area" style="--c: var(--memory)">
+        <p class="tag">03</p>
+        <h3>Memory</h3>
+        <dl>
+          <dt>Digit sequences</dt>
+          <dd>Hear the digits, type them back — forwards, backwards or in order.</dd>
+          <dt>Light-up squares</dt>
+          <dd>Squares flash one by one. Repeat the order. The sequence keeps growing.</dd>
+        </dl>
+      </article>
+      <article class="area" style="--c: var(--speed)">
+        <p class="tag">04</p>
+        <h3>Speed</h3>
+        <dl>
+          <dt>Symbol search</dt>
+          <dd>Is the target symbol in the row? Yes or no, as many as you can.</dd>
+          <dt>Code</dt>
+          <dd>A key pairs symbols with digits. Fill in the symbols against the clock.</dd>
+        </dl>
+      </article>
+    </div>
+
+    <div class="modes">
+      <div class="mode"><span class="mono">~10 min</span><h3>Quick</h3><p>Four puzzles, one from each area, and an overall result.</p></div>
+      <div class="mode"><span class="mono">~30 min</span><h3>Full</h3><p>All eight puzzles and the complete four-area profile.</p></div>
+      <div class="mode"><span class="mono">~20 min · ages 8–15</span><h3>Kids, with a parent</h3><p>Shorter, bigger buttons, breaks between blocks. The parent sees strengths — no IQ number.</p></div>
+    </div>
+  </section>
+
+  <section id="result">
+    <div class="sec-head">
+      <h2>What the result looks like</h2>
+    </div>
+    <div class="two">
+      <div>
+        <h3>A profile first</h3>
+        <p>The main screen shows the four areas side by side, which ones stand out, and a percentile —
+          “better than 78% of people your age”. That says more than any single number, and it is
+          easier to read honestly.</p>
+        <p>Age matters: memory and speed peak at different ages than reasoning does, so you are
+          always compared with your own age group.</p>
+      </div>
+      <div>
+        <h3>An IQ figure, in small print</h3>
+        <p>If you want it, there is an IQ-style figure too — shown as a range, like 108–118, never as
+          one exact number, because a test on a phone can't be that precise.</p>
+        <p>The app measures each answer to the millisecond and checks your phone's touch delay at the
+          start, so a slow screen doesn't count against you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="science">
+    <div class="sec-head">
+      <h2>Where the numbers come from</h2>
+      <p>To say “better than 78% of people your age”, the app needs to know how people of each age
+        usually do. We build those comparison tables — the norms — from open scientific sources.</p>
+    </div>
+    <div class="sources">
+      <div class="source">
+        <p class="mono">Published studies</p>
+        <h3>Peer-reviewed research</h3>
+        <p>Open-access papers that report average scores by age for memory, speed and reasoning tasks
+          like ours — sequences of digits, light-up squares, symbol coding, pattern grids, rotation.</p>
+      </div>
+      <div class="source">
+        <p class="mono">Public datasets</p>
+        <h3>Open survey data</h3>
+        <p>Large public-domain datasets such as the U.S. CDC's NHANES health survey, which includes
+          a timed symbol-coding task, recalculated by us.</p>
+      </div>
+      <div class="source">
+        <p class="mono">Population statistics</p>
+        <h3>Who lives where</h3>
+        <p>Age, sex and education figures from the UN, the World Bank, Eurostat and national censuses,
+          used to balance the sample so it looks like the real population.</p>
+      </div>
+    </div>
+    <p class="science-after">
+      We use the published <strong>figures</strong>, never the questions of other tests: every
+      puzzle in Spectriq is our own, generated from rules. Over time, people who choose to share their
+      results anonymously help adjust the norms to the phone format. Each result shows which version of
+      the norms it was calculated with.
+    </p>
+  </section>
+
+  <section id="fun">
+    <div class="box warn">
+      <h2>For entertainment, honestly</h2>
+      <p>Spectriq is built on published science, but it is <strong>a game, not an instrument</strong>.
+        It has not been clinically validated, and it is not a medical, psychological, educational or
+        professional assessment of any kind.</p>
+      <p>Your result can move with sleep, mood, a noisy room or a small screen. Treat it as a fun
+        snapshot — not as a diagnosis, and not as a reason to make decisions about yourself, your child,
+        your studies or anyone's job. If you have real concerns about memory, attention or development,
+        talk to a qualified specialist.</p>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="sec-head">
+      <h2>Private by default</h2>
+    </div>
+    <ul class="facts">
+      <li>No sign-up, no email, no name. No ads and no analytics in this version.</li>
+      <li>The test runs entirely on the phone and works without the internet. Your history stays on your device.</li>
+      <li>Sharing results anonymously to improve the norms is optional and off until you turn it on — and for a child, only a parent can turn it on.</li>
+      <li>Even then: no name, no contacts, no location, no advertising ID. The <a href="privacy">Privacy Policy</a> lists every field.</li>
+    </ul>
+  </section>
+
+  <section id="get">
+    <div class="sec-head">
+      <h2>Not out yet</h2>
+      <p>Spectriq is being built right now. The buttons below will work once the app is in the stores.
+        Want to try an early version? Write to <a href="mailto:contact@nghive.app">contact@nghive.app</a>.</p>
+    </div>
+    <div class="stores">
+      <span class="store-btn" aria-label="App Store — coming soon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.463 2.096-1.184 2.883-.796.83-2.083 1.474-3.13 1.474-.11-1.11.464-2.223 1.183-2.94.796-.83 2.148-1.443 3.131-1.417zM20.62 17.104c-.472 1.09-.694 1.577-1.297 2.548-.842 1.35-2.03 3.036-3.501 3.05-1.303.014-1.64-.85-3.41-.84-1.77.01-2.14.855-3.443.841-1.472-.014-2.596-1.530-3.438-2.878-2.36-3.78-2.607-8.22-1.15-10.582.958-1.535 2.518-2.432 3.987-2.432 1.494 0 2.435.85 3.673.85 1.203 0 1.933-.85 3.674-.85 1.32 0 2.717.72 3.717 1.964-3.27 1.79-2.74 6.463.188 8.329z"/></svg>
+        <span class="kv"><span class="small">Coming soon to the</span><span class="big">App Store</span></span>
+      </span>
+      <span class="store-btn" aria-label="Google Play — coming soon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.6c-.4.4-.6.9-.6 1.5v15.8c0 .6.2 1.1.6 1.5l.2.1L13 12.4v-.2L3.8 2.5l-.2.1zM16 15.3l-3-3v-.2l3-3 3.5 2c1 .6 1 1.6 0 2.2l-3.5 2zM4.4 21.5 13.7 13l2.3 2.3-10.8 6c-.3.2-.7.3-1 .2l.2 0zM13.7 11l-9.3-9.4c.3-.1.6 0 .9.2L16 8l-2.3 3z"/></svg>
+        <span class="kv"><span class="small">Coming soon to</span><span class="big">Google Play</span></span>
+      </span>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Spectriq — puzzles for fun, numbers from open science</span>
+    <nav>
+      <a href="privacy">Privacy Policy</a>
+      <a href="terms">Terms of Use</a>
+      <a href="mailto:contact@nghive.app">Contact</a>
+      <a href="https://nghive.app/" target="_blank" rel="noopener">Made by NG Hive &#8599;</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
